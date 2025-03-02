@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Biochemistry Concepts - Dibyajyotee Ghosh</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.9.1/gsap.min.js"></script>
+    <style>
+        body {
+            margin: 0;
+            font-family: sans-serif;
+            background-image: url('https://cdn.wallpapersafari.com/26/10/lV9LYT.jpg');
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            color: #e0e0e0;
+            padding: 20px;
+        }
+        h1, h2 {
+            color: #bb86fc;
+        }
+        .concept-section {
+            margin-bottom: 20px;
+            padding: 15px;
+            background-color: rgba(30, 30, 30, 0.8);
+            border-radius: 8px;
+        }
+        .concept-section p {
+            line-height: 1.6;
+        }
+        a {
+            color: #03dac6;
+            text-decoration: none;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <h1 class="animate-header">Biochemistry Concepts</h1>
+
+    <div class="concept-section animate-section">
+        <h2>Q1. Blood Groups Determined by Sugars on Glycoproteins/Glycolipids</h2>
+        <p><strong>Justification:</strong> The A, B, and O blood groups are determined by specific sugar residues attached to glycoproteins and glycolipids on red blood cell surfaces. Type A contains N-acetylgalactosamine (GalNAc), Type B contains galactose (Gal), and Type O lacks both A and B terminal sugars, terminating with fucose instead. These sugars act as antigens. Antibodies in the plasma recognize and bind to non-self sugars, triggering immune reactions. For example, anti-A antibodies attack type A blood if mismatched, anti-B antibodies attack type B blood, and Type O lacks A/B antigens, making it a universal donor.</p>
+        <p><strong>Conclusion:</strong> The structural differences in terminal sugars directly determine blood group compatibility and immune responses.</p>
+    </div>
+
+    <div class="concept-section animate-section">
+        <h2>Q2. Enzymes vs. Proteins</h2>
+        <p><strong>Justification:</strong> All enzymes are proteins, biological catalysts with specific active sites that lower activation energy for reactions. However, not all proteins are enzymes. Proteins have diverse roles, including structural (collagen, keratin), transport (hemoglobin, albumin), signaling (insulin), and defense (antibodies). The key difference is that enzymes catalyze reactions, while other proteins lack catalytic activity.</p>
+    </div>
+
+    <div class="concept-section animate-section">
+        <h2>Q3. RNase A Refolding Experiment</h2>
+        <p><strong>Design:</strong> 1. Denaturation: Treat RNase A with 8M urea and a reducing agent. 2. Renaturation: Dialyze the solution to remove urea and restore physiological conditions. 3. Functional Test: Measure enzymatic activity and confirm restored 3D structure using CD or X-ray crystallography. <strong>Outcome:</strong> RNase A regains activity and native conformation, demonstrating that primary structure dictates tertiary structure (Anfinsen’s dogma).</p>
+    </div>
+
+    <div class="concept-section animate-section">
+        <h2>Q4. Effects on B-DNA Melting Curve</h2>
+        <p>1. Decreasing NaCl concentration: Lowers melting temperature due to destabilized hydrogen bonds. 2. High-pressure shearing: Results in a broader melting curve with reduced Tm. 3. Heating above Tm + rapid cooling: Leads to single-stranded DNA formation and a lower Tm upon remelting.</p>
+    </div>
+
+    <div class="concept-section animate-section">
+        <h2>Q5. Polyunsaturated Fatty Acids in Cold-Climate Animals</h2>
+        <p><strong>Justification:</strong> Polyunsaturated fatty acids (PUFAs) have multiple double bonds, creating kinks in hydrocarbon chains, which maintains membrane fluidity at low temperatures. Cold-climate animals evolve membranes rich in PUFAs to avoid rigidification. Example: Antarctic fish have 30% more PUFAs in cell membranes than tropical species.</p>
+    </div>
+
+    <script>
+        gsap.from(".animate-header", { duration: 1, y: -50, opacity: 0, ease: "power2.out" });
+
+        gsap.utils.toArray(".animate-section").forEach(section => {
+            gsap.from(section, {
+                duration: 0.8,
+                opacity: 0,
+                y: 30,
+                stagger: 0.2,
+                ease: "power2.out"
+            });
+        });
+    </script>
+</body>
+</html>
