@@ -7,14 +7,42 @@
     <link rel="stylesheet" href="styles.css">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet">
     <style>
+        body {
+            background-image: url('https://wallpaperaccess.com/full/5464770.jpg'); /* Replace with your image URL */
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            color: white; /* General text color for readability */
+            position: relative; /* Needed for overlay */
+        }
+
+        body::before { /* Semi-transparent black overlay */
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.6); /* Adjust opacity as needed */
+            z-index: -1; /* Place behind content */
+        }
+
+        header, main section {
+            background-color: rgba(255, 255, 255, 0.1); /* Semi-transparent white background for content */
+            padding: 20px;
+            margin: 20px;
+            border-radius: 5px;
+        }
+
         /* Additional styles for the pull-up section */
         .pull-up-section {
-            display: none; /* Initially hidden */
-            background: #ffffff;
+            display: none;
+            background: rgba(255, 255, 255, 0.8); /* Semi-transparent white */
             padding: 20px;
             border-radius: 5px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
             margin-top: 20px;
+            color: black; /* Text color for the pull-up section */
         }
 
         .toggle-button {
@@ -22,6 +50,15 @@
             color: #35424a;
             text-decoration: underline;
         }
+
+        nav ul li a {
+            color: white; /* Navigation link color */
+        }
+
+        h1, h2, h3, h4 {
+            color: white; /* Heading color */
+        }
+
     </style>
 </head>
 <body>
@@ -36,22 +73,22 @@
                 <li><a href="contact.html">Contact</a></li>
             </ul>
         </nav>
-        <h1>Dibyajyotee Ghosh</h1>
+        <h1 class="animate-header">Dibyajyotee Ghosh</h1>
     </header>
 
     <main>
-        <section id="about">
+        <section id="about" class="animate-section">
             <h2>Objective</h2>
             <p>Recent postgraduate in Physics with a strong interest in research, seeking the position of Junior Research Associate, eagerly wants to contribute to innovative projects and gain valuable experience in a dynamic R&D environment.</p>
         </section>
 
-        <section id="personal-data">
+        <section id="personal-data" class="animate-section">
             <h2>Personal Data</h2>
             <p><strong>Place of Birth:</strong> Bengaluru</p>
             <p><strong>Date of Birth:</strong> 18/02/2002</p>
         </section>
 
-        <section id="language">
+        <section id="language" class="animate-section">
             <h2>Language Proficiency</h2>
             <ul>
                 <li>English (Fluent)</li>
@@ -60,13 +97,12 @@
             </ul>
         </section>
 
-        <section id="references">
+        <section id="references" class="animate-section">
             <h2>References</h2>
             <p>Available Upon Request</p>
         </section>
 
-        <!-- Pull-up Section for Favorites -->
-        <section>
+        <section class="animate-section">
             <h2>Favorites</h2>
             <p class="toggle-button" onclick="toggleFavorites()">Click here to see my favorites!</p>
             <div class="pull-up-section" id="favorites">
@@ -80,7 +116,7 @@
                 <p>For more information, visit his official website: <a href="https://www.cristianoronaldo.com/#cr7" target="_blank">Cristiano Ronaldo Official Website</a></p>
 
                 <h4>Real Madrid</h4>
-                <p>Real Madrid Club de Fútbol is a professional football club based in Madrid, Spain. It is one of the most successful and popular football clubs in the world, known for its rich history and numerous titles, including UEFA Champions League victories.</p>
+                <p>Real Madrid Club de Ftbol is a professional football club based in Madrid, Spain. It is one of the most successful and popular football clubs in the world, known for its rich history and numerous titles, including UEFA Champions League victories.</p>
                 <p>For more information, visit their official website: <a href="https://www.realmadrid.com/en-US" target="_blank">Real Madrid Official Website</a></p>
             </div>
         </section>
@@ -96,7 +132,7 @@
         </div>
     </footer>
 
-    <script src="script.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.9.1/gsap.min.js"></script>
     <script>
         function toggleFavorites() {
             const favoritesSection = document.getElementById('favorites');
@@ -106,6 +142,27 @@
                 favoritesSection.style.display = 'none';
             }
         }
+
+        gsap.from(".animate-header", {
+            duration: 1,
+            y: -50,
+            opacity: 0,
+            ease: "power2.out"
+        });
+
+        gsap.utils.toArray(".animate-section").forEach((section) => {
+            gsap.from(section, {
+                scrollTrigger: {
+                    trigger: section,
+                    start: "top 80%",
+                    end: "bottom 20%",
+                    toggleActions: "play none none reverse",
+                },
+                y: 50,
+                opacity: 0,
+                duration: 0.8,
+                ease: "power2.out",
+            });
+        });
+
     </script>
-</body>
-</html>
