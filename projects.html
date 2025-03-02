@@ -5,6 +5,74 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Projects - Dibyajyotee Ghosh</title>
     <link rel="stylesheet" href="styles.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.9.1/gsap.min.js"></script>
+    <style>
+        body {
+            margin: 0;
+            font-family: sans-serif;
+            background-image: url('https://wallpapers.com/images/hd/1080x1080-xbox-project-scorpio-mku72u0cx3aufhuv.jpg');
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            color: white;
+        }
+
+        header {
+            background-color: rgba(0, 0, 0, 0.7);
+            padding: 20px;
+            text-align: center;
+        }
+
+        nav ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+        }
+
+        nav li {
+            margin: 0 15px;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            padding: 5px 10px;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+        }
+
+        nav a:hover {
+            background-color: rgba(255, 255, 255, 0.2);
+        }
+
+        main {
+            padding: 20px;
+            text-align: left;
+            margin: 20px auto;
+            max-width: 800px;
+            background-color: rgba(0, 0, 0, 0.6);
+            border-radius: 10px;
+        }
+
+        main section {
+            margin-bottom: 20px;
+        }
+
+        main h2 {
+            margin-bottom: 10px;
+        }
+
+        footer {
+            background-color: rgba(0, 0, 0, 0.7);
+            text-align: center;
+            padding: 10px;
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+        }
+    </style>
 </head>
 <body>
     <header>
@@ -22,11 +90,11 @@
     </header>
 
     <main>
-        <section>
+        <section class="project-section">
             <h2>Nanotech Armour</h2>
             <p>Developed a nanotech armour that can retract and expand at will of user, making it lightweight, can take various shapes based on use, is bulletproof totally, thereby decreasing fatality rate.</p>
         </section>
-        <section>
+        <section class="project-section">
             <h2>Underwater ROV</h2>
             <p>Developed an underwater ROV, with an IoT device, Ultrasonic Sensors and some detectors, which mainly detect underwater detonators and submarine movements and warns the army camp on time. (Applied for a patent, details available upon request)</p>
         </section>
@@ -35,5 +103,14 @@
     <footer>
         <p>&copy; 2023 Dibyajyotee Ghosh. All rights reserved.</p>
     </footer>
+
+    <script>
+        gsap.from("header", { duration: 1, opacity: 0, y: -50 });
+        gsap.from("main", { duration: 1, opacity: 0, y: 50, delay: 0.2 });
+        gsap.from(".project-section", { duration: 0.8, opacity: 0, y: 30, stagger: 0.2, delay: 0.4 });
+        gsap.from(".project-section h2", { duration: 0.6, opacity: 0, x: -30, stagger: 0.2, delay: 0.6});
+        gsap.from(".project-section p", { duration: 0.4, opacity: 0, y: 20, stagger: 0.2, delay: 0.8 });
+        gsap.from("footer", { duration: 1, opacity: 0, y: 50, delay: 1 });
+    </script>
 </body>
 </html>

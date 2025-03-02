@@ -5,6 +5,79 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Skills - Dibyajyotee Ghosh</title>
     <link rel="stylesheet" href="styles.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.9.1/gsap.min.js"></script>
+    <style>
+        body {
+            margin: 0;
+            font-family: sans-serif;
+            background-image: url('https://s40424.pcdn.co/in/wp-content/uploads/2022/10/Technical-Skills_How-to-Them-Master-in-2022.jpg');
+            background-size: cover;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            color: white;
+        }
+
+        header {
+            background-color: rgba(0, 0, 0, 0.7);
+            padding: 20px;
+            text-align: center;
+        }
+
+        nav ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+        }
+
+        nav li {
+            margin: 0 15px;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            padding: 5px 10px;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+        }
+
+        nav a:hover {
+            background-color: rgba(255, 255, 255, 0.2);
+        }
+
+        main {
+            padding: 20px;
+            text-align: left;
+            margin: 20px auto;
+            max-width: 800px;
+            background-color: rgba(0, 0, 0, 0.6);
+            border-radius: 10px;
+        }
+
+        main section {
+            margin-bottom: 20px;
+        }
+
+        main h2, main h3 {
+            margin-bottom: 10px;
+        }
+
+        main ul {
+            list-style-type: disc;
+            padding-left: 20px;
+        }
+
+        footer {
+            background-color: rgba(0, 0, 0, 0.7);
+            text-align: center;
+            padding: 10px;
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+        }
+    </style>
 </head>
 <body>
     <header>
@@ -22,31 +95,31 @@
     </header>
 
     <main>
-        <section>
+        <section class="skill-section">
             <h2>Technical Skills</h2>
-            <h3>Programming Languages:</h3>
-            <ul>
+            <h3 class="skill-heading">Programming Languages:</h3>
+            <ul class="skill-list">
                 <li>Python</li>
                 <li>C++</li>
                 <li>MATLAB</li>
                 <li>Fortran</li>
             </ul>
-            <h3>Software:</h3>
-            <ul>
+            <h3 class="skill-heading">Software:</h3>
+            <ul class="skill-list">
                 <li>LaTeX</li>
                 <li>Mathematica</li>
                 <li>COMSOL Multiphysics</li>
                 <li>LabVIEW</li>
             </ul>
-            <h3>Laboratory Techniques:</h3>
-            <ul>
+            <h3 class="skill-heading">Laboratory Techniques:</h3>
+            <ul class="skill-list">
                 <li>Spectroscopy</li>
                 <li>Cryogenics</li>
                 <li>Vacuum Technology</li>
                 <li>Laser Systems</li>
             </ul>
-            <h3>Analytical Skills:</h3>
-            <ul>
+            <h3 class="skill-heading">Analytical Skills:</h3>
+            <ul class="skill-list">
                 <li>Data Analysis: Statistical Analysis, Data Mining, Signal Processing</li>
                 <li>Modelling and Simulation: Computational Physics, Numerical Methods</li>
                 <li>Problem-Solving: Critical Thinking, Hypothesis Testing</li>
@@ -57,5 +130,14 @@
     <footer>
         <p>&copy; 2023 Dibyajyotee Ghosh. All rights reserved.</p>
     </footer>
+
+    <script>
+        gsap.from("header", { duration: 1, opacity: 0, y: -50 });
+        gsap.from("main", { duration: 1, opacity: 0, y: 50, delay: 0.2 });
+        gsap.from(".skill-section h2", { duration: 0.8, opacity: 0, x: -50, stagger: 0.2, delay: 0.4 });
+        gsap.from(".skill-heading", { duration: 0.6, opacity: 0, x: -30, stagger: 0.1, delay: 0.6});
+        gsap.from(".skill-list li", { duration: 0.4, opacity: 0, y: 20, stagger: 0.05, delay: 0.8 });
+        gsap.from("footer", { duration: 1, opacity: 0, y: 50, delay: 1 });
+    </script>
 </body>
 </html>
