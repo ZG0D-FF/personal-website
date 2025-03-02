@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dibyajyotee Ghosh - Personal Website</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet">
+    <style>
+        /* Additional styles for the pull-up section */
+        .pull-up-section {
+            display: none; /* Initially hidden */
+            background: #ffffff;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            margin-top: 20px;
+        }
+
+        .toggle-button {
+            cursor: pointer;
+            color: #35424a;
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav>
+            <ul>
+                <li><a href="education.html">Education</a></li>
+                <li><a href="projects.html">Projects</a></li>
+                <li><a href="research.html">Research Experience</a></li>
+                <li><a href="skills.html">Skills</a></li>
+                <li><a href="extracurricular.html">Extracurricular Activities</a></li>
+                <li><a href="contact.html">Contact</a></li>
+            </ul>
+        </nav>
+        <h1>Dibyajyotee Ghosh</h1>
+    </header>
+
+    <main>
+        <section id="about">
+            <h2>Objective</h2>
+            <p>Recent postgraduate in Physics with a strong interest in research, seeking the position of Junior Research Associate, eagerly wants to contribute to innovative projects and gain valuable experience in a dynamic R&D environment.</p>
+        </section>
+
+        <section id="personal-data">
+            <h2>Personal Data</h2>
+            <p><strong>Place of Birth:</strong> Bengaluru</p>
+            <p><strong>Date of Birth:</strong> 18/02/2002</p>
+        </section>
+
+        <section id="language">
+            <h2>Language Proficiency</h2>
+            <ul>
+                <li>English (Fluent)</li>
+                <li>Bengali (Native)</li>
+                <li>Hindi (Proficient)</li>
+            </ul>
+        </section>
+
+        <section id="references">
+            <h2>References</h2>
+            <p>Available Upon Request</p>
+        </section>
+
+        <!-- Pull-up Section for Favorites -->
+        <section>
+            <h2>Favorites</h2>
+            <p class="toggle-button" onclick="toggleFavorites()">Click here to see my favorites!</p>
+            <div class="pull-up-section" id="favorites">
+                <h3>My Favorite Players</h3>
+                <h4>Lionel Messi</h4>
+                <p>Lionel Messi is an Argentine professional footballer who plays as a forward for Inter Miami and the Argentina national team. He is widely regarded as one of the greatest players of all time, having won numerous awards, including multiple FIFA Ballon d'Or titles.</p>
+                <p>For more information, visit his official website: <a href="https://messi.com/en/" target="_blank">Lionel Messi Official Website</a></p>
+
+                <h4>Cristiano Ronaldo</h4>
+                <p>Cristiano Ronaldo is a Portuguese professional footballer who plays as a forward for Al Nassr and the Portugal national team. He is also considered one of the greatest football players of all time, known for his incredible goal-scoring ability and numerous accolades.</p>
+                <p>For more information, visit his official website: <a href="https://www.cristianoronaldo.com/#cr7" target="_blank">Cristiano Ronaldo Official Website</a></p>
+
+                <h4>Real Madrid</h4>
+                <p>Real Madrid Club de Fútbol is a professional football club based in Madrid, Spain. It is one of the most successful and popular football clubs in the world, known for its rich history and numerous titles, including UEFA Champions League victories.</p>
+                <p>For more information, visit their official website: <a href="https://www.realmadrid.com/en-US" target="_blank">Real Madrid Official Website</a></p>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2023 Dibyajyotee Ghosh. All rights reserved.</p>
+        <div class="socials">
+            <a href="https://github.com/ZG0D-FF" target="_blank"><i class="fab fa-github"></i></a>
+            <a href="https://www.linkedin.com/in/mr-zgod-06a24631a/" target="_blank"><i class="fab fa-linkedin"></i></a>
+            <a href="#" target="_blank"><i class="fab fa-twitter"></i></a>
+            <a href="https://discord.com/channels/@me" target="_blank"><i class="fab fa-discord"></i></a>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+    <script>
+        function toggleFavorites() {
+            const favoritesSection = document.getElementById('favorites');
+            if (favoritesSection.style.display === 'none' || favoritesSection.style.display === '') {
+                favoritesSection.style.display = 'block';
+            } else {
+                favoritesSection.style.display = 'none';
+            }
+        }
+    </script>
+</body>
+</html>
