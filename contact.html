@@ -1,160 +1,184 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Contact - Dibyajyotee Ghosh</title>
-    <link rel="stylesheet" href="styles.css">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.9.1/gsap.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.9.1/ScrollTrigger.min.js"></script>
-    <style>
-        body {
-            margin: 0;
-            font-family: sans-serif;
-            color: white;
-            overflow: auto;
-            background-image: url('https://th.bing.com/th/id/OIP.sESC9jqemIhhT8FlVPh5pAHaE8?rs=1&pid=ImgDetMain');
-            background-size: cover;
-            background-repeat: no-repeat;
-            background-attachment: fixed;
-            position: relative;
-        }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DJ // CONTACT</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Space+Mono:wght@400;700&family=Rajdhani:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.9.1/gsap.min.js"></script>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{--bg:#040907;--bg2:#0b1410;--green:#00e830;--green2:#39ff14;--gdim:rgba(0,232,48,.08);--white:#e2ffe8;--gray:#4a6650;--warn:#ffc700;--text:#b0ceb7;--fdisp:'Bebas Neue',sans-serif;--fmono:'Space Mono',monospace;--fbody:'Rajdhani',sans-serif}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--text);font-family:var(--fbody);overflow-x:hidden;cursor:crosshair;min-height:100vh}
+body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;background-image:linear-gradient(rgba(0,232,48,.02) 1px,transparent 1px),linear-gradient(90deg,rgba(0,232,48,.02) 1px,transparent 1px);background-size:64px 64px}
+body::after{content:'';position:fixed;inset:0;pointer-events:none;z-index:999;background:repeating-linear-gradient(0deg,transparent,transparent 2px,rgba(0,0,0,.03) 2px,rgba(0,0,0,.03) 4px)}
+::-webkit-scrollbar{width:3px}::-webkit-scrollbar-track{background:var(--bg)}::-webkit-scrollbar-thumb{background:var(--green)}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:0}}
+@keyframes radar{0%{transform:scale(1);opacity:.5}100%{transform:scale(3);opacity:0}}
+nav{position:fixed;top:0;left:0;right:0;z-index:500;display:flex;align-items:center;justify-content:space-between;padding:0 40px;height:56px;background:rgba(4,9,7,.92);backdrop-filter:blur(16px);border-bottom:1px solid rgba(0,232,48,.18)}
+.nav-logo{font-family:var(--fdisp);font-size:28px;color:var(--green);letter-spacing:5px;text-shadow:0 0 22px var(--green);text-decoration:none}
+.nav-links{display:flex;gap:2px;list-style:none}
+.nav-links a{font-family:var(--fmono);font-size:8.5px;color:var(--gray);text-decoration:none;letter-spacing:2px;text-transform:uppercase;padding:6px 11px;border:1px solid transparent;transition:all .3s}
+.nav-links a:hover,.nav-links a.active{color:var(--green);border-color:rgba(0,232,48,.35);background:var(--gdim);text-shadow:0 0 10px var(--green)}
+.nav-clock{font-family:var(--fmono);font-size:10px;color:var(--green);opacity:.6}
+.wrap{position:relative;z-index:1;padding-top:56px}
 
-        body::before {
-            content: '';
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.6);
-            z-index: -1;
-        }
+/* BANNER */
+.banner{padding:90px 60px 60px;border-bottom:1px solid rgba(0,232,48,.12);position:relative;overflow:hidden}
+.banner::before{content:'CONTACT';position:absolute;right:-10px;top:10px;font-family:var(--fdisp);font-size:180px;color:rgba(0,232,48,.022);pointer-events:none;line-height:1}
+/* Radar circle decoration */
+.radar{position:absolute;right:10%;top:50%;transform:translate(-50%,-50%);width:160px;height:160px;border-radius:50%;border:1px solid rgba(0,232,48,.12);pointer-events:none}
+.radar::before,.radar::after{content:'';position:absolute;inset:0;border-radius:50%;border:1px solid rgba(0,232,48,.12);animation:radar 2.4s ease-out infinite}
+.radar::after{animation-delay:1.2s}
+.radar-dot{position:absolute;left:50%;top:50%;width:8px;height:8px;border-radius:50%;background:var(--green);transform:translate(-50%,-50%);box-shadow:0 0 14px var(--green);animation:blink 1.4s infinite}
+.banner-tag{font-family:var(--fmono);font-size:9.5px;color:var(--green);letter-spacing:4px;display:block;margin-bottom:14px;opacity:.6}
+.banner-title{font-family:var(--fdisp);font-size:clamp(72px,11vw,150px);color:var(--white);line-height:.85;letter-spacing:6px}
+.banner-title span{color:var(--green);text-shadow:0 0 40px var(--green)}
+.banner-sub{font-family:var(--fmono);font-size:10px;color:var(--gray);letter-spacing:3px;margin-top:16px}
 
-        header {
-            background-color: rgba(0, 0, 0, 0.7);
-            padding: 20px;
-            text-align: center;
-        }
+.content{padding:80px 60px}
+.contact-grid{display:grid;grid-template-columns:1fr 1fr;gap:70px}
 
-        nav ul {
-            list-style: none;
-            padding: 0;
-            margin: 0;
-            display: flex;
-            justify-content: center;
-        }
+/* FORM */
+.form-section{}
+.form-label{font-family:var(--fmono);font-size:9px;color:var(--green);letter-spacing:3px;margin-bottom:24px;display:block;opacity:.7}
+.cf-input,.cf-textarea{width:100%;background:rgba(0,232,48,.025);border:1px solid rgba(0,232,48,.18);color:var(--white);font-family:var(--fmono);font-size:11.5px;padding:14px 18px;margin-bottom:14px;outline:none;transition:border-color .3s,box-shadow .3s;resize:vertical;display:block}
+.cf-input:focus,.cf-textarea:focus{border-color:var(--green);box-shadow:0 0 16px rgba(0,232,48,.12)}
+.cf-input::placeholder,.cf-textarea::placeholder{color:var(--gray)}
+.cf-textarea{min-height:135px}
+.btn-transmit{background:var(--green);color:var(--bg);font-family:var(--fmono);font-size:12px;letter-spacing:3px;font-weight:700;text-transform:uppercase;padding:14px 32px;border:none;cursor:pointer;width:100%;transition:all .3s;position:relative;overflow:hidden}
+.btn-transmit::before{content:'';position:absolute;inset:0;background:linear-gradient(90deg,transparent,rgba(255,255,255,.2),transparent);transform:translateX(-100%);transition:transform .5s}
+.btn-transmit:hover{background:var(--green2);box-shadow:0 0 30px var(--green)}
+.btn-transmit:hover::before{transform:translateX(100%)}
 
-        nav li {
-            margin: 0 15px;
-        }
+/* LINKS SECTION */
+.links-section{}
+.links-label{font-family:var(--fmono);font-size:9px;color:var(--green);letter-spacing:3px;margin-bottom:24px;display:block;opacity:.7}
+.cl{display:flex;align-items:center;gap:18px;padding:20px;border:1px solid rgba(0,232,48,.14);background:rgba(0,232,48,.02);text-decoration:none;color:var(--text);transition:all .3s;margin-bottom:12px}
+.cl:hover{border-color:rgba(0,232,48,.38);color:var(--green);background:rgba(0,232,48,.05);transform:translateX(10px);box-shadow:4px 0 20px rgba(0,232,48,.07)}
+.cl-icon{width:44px;height:44px;border:1px solid rgba(0,232,48,.28);display:flex;align-items:center;justify-content:center;color:var(--green);font-size:18px;flex-shrink:0;transition:all .3s}
+.cl:hover .cl-icon{background:rgba(0,232,48,.1);box-shadow:0 0 14px rgba(0,232,48,.3)}
+.cl-lbl{font-family:var(--fmono);font-size:8.5px;color:var(--gray);letter-spacing:2px;display:block;margin-bottom:3px}
+.cl-val{font-size:14px;font-weight:600}
 
-        nav a {
-            color: white;
-            text-decoration: none;
-            padding: 5px 10px;
-            border-radius: 5px;
-            transition: background-color 0.3s ease;
-        }
+/* STATUS BOX */
+.status-box{border:1px solid rgba(0,232,48,.2);background:rgba(0,232,48,.03);padding:24px;margin-top:24px}
+.sb-title{font-family:var(--fmono);font-size:9px;color:var(--green);letter-spacing:3px;margin-bottom:18px;opacity:.7}
+.sb-row{display:flex;align-items:center;gap:14px;padding:10px 0;border-bottom:1px solid rgba(0,232,48,.07);font-family:var(--fmono);font-size:10px}
+.sb-row:last-child{border-bottom:none}
+.sb-dot{width:6px;height:6px;border-radius:50%;background:var(--green);animation:blink 1.4s infinite;flex-shrink:0}
+.sb-dot.warn{background:var(--warn);box-shadow:0 0 8px var(--warn)}
 
-        nav a:hover {
-            background-color: rgba(255, 255, 255, 0.2);
-        }
-
-        main {
-            padding: 20px;
-            text-align: center;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 80vh;
-        }
-
-        form {
-            background-color: rgba(0, 0, 0, 0.6);
-            padding: 20px;
-            border-radius: 10px;
-            width: 300px;
-        }
-
-        form input, form textarea, form button {
-            width: 100%;
-            padding: 10px;
-            margin-bottom: 10px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-            background-color: rgba(255, 255, 255, 0.8);
-        }
-
-        form button {
-            background-color: #007bff;
-            color: white;
-            border: none;
-            cursor: pointer;
-        }
-
-        footer {
-            background-color: rgba(0, 0, 0, 0.7);
-            text-align: center;
-            padding: 10px;
-            position: fixed;
-            bottom: 0;
-            width: 100%;
-        }
-    </style>
+footer{border-top:1px solid rgba(0,232,48,.14);padding:32px 60px;display:flex;justify-content:space-between;align-items:center;font-family:var(--fmono);font-size:9px;color:var(--gray);letter-spacing:2px;position:relative;z-index:1}
+.f-logo{font-family:var(--fdisp);font-size:30px;color:var(--green);text-shadow:0 0 20px var(--green)}
+.socials a{color:var(--green);font-size:18px;margin-left:16px;transition:all .3s;opacity:.65}
+.socials a:hover{opacity:1;text-shadow:0 0 14px var(--green)}
+.rv{opacity:0;transform:translateY(32px)}
+@media(max-width:860px){nav{padding:0 16px}.nav-links{display:none}.banner{padding:80px 20px 50px}.content{padding:60px 20px}.contact-grid{grid-template-columns:1fr}footer{flex-direction:column;gap:12px;text-align:center;padding:28px 20px}.radar{display:none}}
+</style>
 </head>
 <body>
-    <header>
-        <nav>
-            <ul>
-                <li><a href="index.html">Home</a></li>
-                <li><a href="education.html">Education</a></li>
-                <li><a href="projects.html">Projects</a></li>
-                <li><a href="research.html">Research Experience</a></li>
-                <li><a href="skills.html">Skills</a></li>
-                <li><a href="extracurricular.html">Extracurricular Activities</a></li>
-            </ul>
-        </nav>
-        <h1 class="animate-header">Contact Me</h1>
-    </header>
+<nav>
+  <a href="index.html" class="nav-logo">DJ</a>
+  <ul class="nav-links">
+    <li><a href="index.html">HOME</a></li>
+    <li><a href="education.html">EDUCATION</a></li>
+    <li><a href="projects.html">PROJECTS</a></li>
+    <li><a href="research.html">MISSION LOG</a></li>
+    <li><a href="skills.html">SKILLS</a></li>
+    <li><a href="extracurricular.html">EXTRAS</a></li>
+    <li><a href="contact.html" class="active">CONTACT</a></li>
+  </ul>
+  <div class="nav-clock" id="clock">--:--:--</div>
+</nav>
 
-    <main>
-        <form id="contact-form" class="animate-form">
-            <input type="text" id="name" placeholder="Your Name" required>
-            <input type="email" id="email" placeholder="Your Email" required>
-            <textarea id="message" placeholder="Your Message" required></textarea>
-            <button type="submit">Send Message</button>
-        </form>
-    </main>
+<div class="wrap">
+  <div class="banner">
+    <span class="banner-tag">MODULE_CONTACT · ESTABLISH COMMUNICATION</span>
+    <div class="banner-title">CON<span>TA</span><br>CT</div>
+    <div class="banner-sub">OPEN TO INTERNSHIPS · COLLABORATIONS · PROJECT DISCUSSIONS</div>
+    <div class="radar"><div class="radar-dot"></div></div>
+  </div>
 
-    <footer>
-        <p>� 2023 Dibyajyotee Ghosh. All rights reserved.</p>
-    </footer>
+  <div class="content">
+    <div class="contact-grid rv">
 
-    <script>
-        gsap.from(".animate-header", { duration: 1, y: -50, opacity: 0, ease: "power2.out" });
+      <!-- FORM -->
+      <div class="form-section">
+        <span class="form-label">// TRANSMIT A MESSAGE</span>
+        <input type="text" class="cf-input" placeholder="IDENTIFY YOURSELF..." />
+        <input type="email" class="cf-input" placeholder="COMMUNICATION CHANNEL (EMAIL)..." />
+        <input type="text" class="cf-input" placeholder="SUBJECT LINE..." />
+        <textarea class="cf-textarea" placeholder="TRANSMIT YOUR MESSAGE..."></textarea>
+        <button class="btn-transmit" onclick="handleSend()">TRANSMIT →</button>
+        <div id="send-status" style="margin-top:12px;font-family:var(--fmono);font-size:10px;color:var(--green);letter-spacing:2px;opacity:0;transition:opacity .3s"></div>
+      </div>
 
-        gsap.from(".animate-form", {
-            duration: 1,
-            opacity: 0,
-            y: 50,
-            ease: "power2.out"
-        });
+      <!-- LINKS -->
+      <div class="links-section">
+        <span class="links-label">// DIRECT CHANNELS</span>
 
-        gsap.from("nav li", {
-            duration: 0.8,
-            opacity: 0,
-            y: -20,
-            stagger: 0.1,
-            ease: "power2.out"
-        });
+        <a href="https://github.com/ZG0D-FF" target="_blank" class="cl">
+          <div class="cl-icon"><i class="fab fa-github"></i></div>
+          <div><span class="cl-lbl">GITHUB</span><span class="cl-val">github.com/ZG0D-FF</span></div>
+        </a>
+        <a href="https://www.linkedin.com/in/mr-zgod" target="_blank" class="cl">
+          <div class="cl-icon"><i class="fab fa-linkedin"></i></div>
+          <div><span class="cl-lbl">LINKEDIN</span><span class="cl-val">linkedin.com/in/mr-zgod</span></div>
+        </a>
+        <a href="mailto:ZGODMR@gmail.com" class="cl">
+          <div class="cl-icon"><i class="fas fa-envelope"></i></div>
+          <div><span class="cl-lbl">EMAIL</span><span class="cl-val">ZGODMR@gmail.com</span></div>
+        </a>
+        <a href="https://discord.com/channels/@me" target="_blank" class="cl">
+          <div class="cl-icon"><i class="fab fa-discord"></i></div>
+          <div><span class="cl-lbl">DISCORD</span><span class="cl-val">@me</span></div>
+        </a>
 
-        gsap.from("footer", {
-            duration: 1,
-            opacity: 0,
-            y: 20,
-            ease: "power2.out"
-        });
-    </script>
+        <div class="status-box">
+          <div class="sb-title">// SYSTEM STATUS</div>
+          <div class="sb-row"><div class="sb-dot"></div><span>OPEN TO INTERNSHIPS · 2026</span></div>
+          <div class="sb-row"><div class="sb-dot"></div><span>COLLABORATIONS WELCOME</span></div>
+          <div class="sb-row"><div class="sb-dot warn"></div><span>RESPONSE TIME: 24–48 HRS</span></div>
+          <div class="sb-row"><div class="sb-dot"></div><span>TIMEZONE: IST (UTC +5:30)</span></div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <footer>
+    <div class="f-logo">DJ</div>
+    <div>PORTFOLIO · DJ © 2026 · ALL SYSTEMS OPERATIONAL</div>
+    <div class="socials">
+      <a href="https://github.com/ZG0D-FF" target="_blank"><i class="fab fa-github"></i></div>
+      <a href="https://www.linkedin.com/in/mr-zgod" target="_blank"><i class="fab fa-linkedin"></i></a>
+      <a href="https://discord.com/channels/@me" target="_blank"><i class="fab fa-discord"></i></a>
+    </div>
+  </footer>
+</div>
+
+<script>
+const tick=()=>{const n=new Date(),p=v=>String(v).padStart(2,'0');document.getElementById('clock').textContent=`${p(n.getHours()%12||12)}:${p(n.getMinutes())}:${p(n.getSeconds())} ${n.getHours()>=12?'PM':'AM'} IST`};setInterval(tick,1000);tick();
+function handleSend(){
+  const st=document.getElementById('send-status');
+  st.textContent='// MESSAGE QUEUED... TRANSMITTING...';st.style.opacity=1;
+  setTimeout(()=>{st.textContent='// TRANSMISSION SUCCESSFUL ✓ — Redirecting to email...';},1200);
+  setTimeout(()=>{
+    const name=document.querySelector('.cf-input').value;
+    const email=document.querySelectorAll('.cf-input')[1].value;
+    const subj=document.querySelectorAll('.cf-input')[2].value;
+    const msg=document.querySelector('.cf-textarea').value;
+    window.location.href=`mailto:ZGODMR@gmail.com?subject=${encodeURIComponent(subj||'Portfolio Contact')}&body=${encodeURIComponent(`From: ${name}\nEmail: ${email}\n\n${msg}`)}`;
+  },2000);
+}
+gsap.from('.banner-title',{duration:1.1,y:50,opacity:0,delay:.3,ease:'power3.out'});
+gsap.from('.banner-tag',{duration:.7,y:-14,opacity:0,delay:.2});
+gsap.from('.nav-links li',{duration:.6,opacity:0,y:-14,stagger:.06,delay:.3});
+gsap.fromTo('.rv',{y:32,opacity:0},{y:0,opacity:1,duration:.85,ease:'power2.out',delay:.5});
+</script>
 </body>
 </html>
