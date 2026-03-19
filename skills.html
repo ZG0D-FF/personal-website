@@ -12,30 +12,67 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.9.1/ScrollTrigger.min.js"></script>
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-:root{--bg:#040907;--bg2:#0b1410;--green:#00e830;--green2:#39ff14;--gdim:rgba(0,232,48,.08);--white:#e2ffe8;--gray:#4a6650;--warn:#ffc700;--text:#b0ceb7;--fdisp:'Bebas Neue',sans-serif;--fmono:'Space Mono',monospace;--fbody:'Rajdhani',sans-serif}
+:root{
+  --bg:#040907;--bg2:#0b1410;
+  --green:#00e830;--green2:#39ff14;--gdim:rgba(0,232,48,.08);
+  --white:#e2ffe8;--gray:#4a6650;--warn:#ffc700;--text:#b0ceb7;
+  --fdisp:'Bebas Neue',sans-serif;--fmono:'Space Mono',monospace;--fbody:'Rajdhani',sans-serif;
+}
 html{scroll-behavior:smooth}
 body{background:var(--bg);color:var(--text);font-family:var(--fbody);overflow-x:hidden;cursor:crosshair;min-height:100vh}
-body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;background-image:linear-gradient(rgba(0,232,48,.02) 1px,transparent 1px),linear-gradient(90deg,rgba(0,232,48,.02) 1px,transparent 1px);background-size:64px 64px}
-body::after{content:'';position:fixed;inset:0;pointer-events:none;z-index:999;background:repeating-linear-gradient(0deg,transparent,transparent 2px,rgba(0,0,0,.03) 2px,rgba(0,0,0,.03) 4px)}
+body::before{content:'';position:fixed;inset:0;pointer-events:none;z-index:0;
+  background-image:linear-gradient(rgba(0,232,48,.02) 1px,transparent 1px),linear-gradient(90deg,rgba(0,232,48,.02) 1px,transparent 1px);
+  background-size:64px 64px}
+body::after{content:'';position:fixed;inset:0;pointer-events:none;z-index:999;
+  background:repeating-linear-gradient(0deg,transparent,transparent 2px,rgba(0,0,0,.03) 2px,rgba(0,0,0,.03) 4px)}
 ::-webkit-scrollbar{width:3px}::-webkit-scrollbar-track{background:var(--bg)}::-webkit-scrollbar-thumb{background:var(--green)}
 @keyframes blink{0%,100%{opacity:1}50%{opacity:0}}
 @keyframes pulse{0%,100%{box-shadow:0 0 12px rgba(0,232,48,.3)}50%{box-shadow:0 0 30px rgba(0,232,48,.6)}}
-nav{position:fixed;top:0;left:0;right:0;z-index:500;display:flex;align-items:center;justify-content:space-between;padding:0 40px;height:56px;background:rgba(4,9,7,.92);backdrop-filter:blur(16px);border-bottom:1px solid rgba(0,232,48,.18)}
-.nav-logo{font-family:var(--fdisp);font-size:28px;color:var(--green);letter-spacing:5px;text-shadow:0 0 22px var(--green);text-decoration:none}
-.nav-links{display:flex;gap:2px;list-style:none}
-.nav-links a{font-family:var(--fmono);font-size:8.5px;color:var(--gray);text-decoration:none;letter-spacing:2px;text-transform:uppercase;padding:6px 11px;border:1px solid transparent;transition:all .3s}
-.nav-links a:hover,.nav-links a.active{color:var(--green);border-color:rgba(0,232,48,.35);background:var(--gdim);text-shadow:0 0 10px var(--green)}
-.nav-clock{font-family:var(--fmono);font-size:10px;color:var(--green);opacity:.6}
-.wrap{position:relative;z-index:1;padding-top:56px}
 
-/* BANNER with mini ball canvas */
-.banner{padding:90px 60px 60px;border-bottom:1px solid rgba(0,232,48,.12);position:relative;overflow:hidden;display:grid;grid-template-columns:1fr auto}
-.banner::before{content:'SKILLS';position:absolute;right:-10px;top:10px;font-family:var(--fdisp);font-size:200px;color:rgba(0,232,48,.022);pointer-events:none;line-height:1}
-.banner-left{}
-.banner-tag{font-family:var(--fmono);font-size:9.5px;color:var(--green);letter-spacing:4px;display:block;margin-bottom:14px;opacity:.6}
+/* TACTICAL BG */
+#tactical-bg{position:fixed;inset:0;z-index:0;pointer-events:none;}
+#tactical-overlay{position:fixed;inset:0;z-index:1;pointer-events:none;
+  background:linear-gradient(180deg,rgba(4,9,7,.72) 0%,rgba(4,9,7,.42) 50%,rgba(4,9,7,.88) 100%);}
+
+/* TOOLTIP */
+#node-tip{position:fixed;z-index:600;font-family:var(--fmono);font-size:10px;
+  color:#000;background:#ffd700;padding:4px 12px;letter-spacing:2px;
+  pointer-events:none;opacity:0;transition:opacity .2s;white-space:nowrap;}
+
+/* NODE POPUP */
+#node-popup{display:none;position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);
+  z-index:700;background:rgba(4,9,7,.97);border:1px solid var(--green);
+  padding:32px 40px;min-width:320px;font-family:var(--fmono);}
+#np-close{position:absolute;top:12px;right:16px;color:var(--green);cursor:pointer;font-size:20px;}
+#np-title{font-family:var(--fdisp);font-size:42px;color:var(--white);letter-spacing:4px;margin-bottom:8px;}
+#np-level{font-size:12px;color:var(--green);letter-spacing:2px;margin-bottom:16px;}
+#np-projects{font-size:13px;color:var(--text);line-height:1.9;}
+
+/* NAV */
+nav{position:fixed;top:0;left:0;right:0;z-index:500;display:flex;align-items:center;
+  justify-content:space-between;padding:0 40px;height:56px;
+  background:rgba(4,9,7,.92);backdrop-filter:blur(16px);border-bottom:1px solid rgba(0,232,48,.18)}
+.nav-logo{font-family:var(--fdisp);font-size:28px;color:var(--green);letter-spacing:5px;
+  text-shadow:0 0 22px var(--green);text-decoration:none}
+.nav-links{display:flex;gap:2px;list-style:none}
+.nav-links a{font-family:var(--fmono);font-size:8.5px;color:var(--gray);text-decoration:none;
+  letter-spacing:2px;text-transform:uppercase;padding:6px 11px;border:1px solid transparent;transition:all .3s}
+.nav-links a:hover,.nav-links a.active{color:var(--green);border-color:rgba(0,232,48,.35);
+  background:var(--gdim);text-shadow:0 0 10px var(--green)}
+.nav-clock{font-family:var(--fmono);font-size:10px;color:var(--green);opacity:.6}
+
+/* WRAP */
+.wrap{position:relative;z-index:10;padding-top:56px}
+
+/* BANNER */
+.banner{padding:90px 60px 60px;border-bottom:1px solid rgba(0,232,48,.12);
+  position:relative;overflow:hidden;display:grid;grid-template-columns:1fr auto}
+.banner::before{content:'SKILLS';position:absolute;right:-10px;top:10px;
+  font-family:var(--fdisp);font-size:200px;color:rgba(0,232,48,.022);pointer-events:none;line-height:1}
+.banner-tag{font-family:var(--fmono);font-size:13px;color:var(--green);letter-spacing:4px;display:block;margin-bottom:14px;opacity:.6}
 .banner-title{font-family:var(--fdisp);font-size:clamp(72px,11vw,150px);color:var(--white);line-height:.85;letter-spacing:6px}
 .banner-title span{color:var(--green);text-shadow:0 0 40px var(--green)}
-.banner-sub{font-family:var(--fmono);font-size:10px;color:var(--gray);letter-spacing:3px;margin-top:16px}
+.banner-sub{font-family:var(--fmono);font-size:13px;color:var(--gray);letter-spacing:3px;margin-top:16px}
 #mini-ball-canvas{width:220px;height:220px;align-self:center;margin-top:20px}
 
 /* CONTENT */
@@ -45,46 +82,87 @@ nav{position:fixed;top:0;left:0;right:0;z-index:500;display:flex;align-items:cen
 .s-title{font-family:var(--fdisp);font-size:clamp(34px,4vw,60px);color:var(--white);letter-spacing:4px;line-height:1}
 .s-line{flex:1;height:1px;background:linear-gradient(90deg,rgba(0,232,48,.4),transparent)}
 
-/* SKILL MATRIX */
-.skill-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(175px,1fr));gap:14px;margin-bottom:56px}
-.skill{border:1px solid rgba(0,232,48,.14);padding:24px 16px;background:rgba(0,232,48,.02);transition:all .35s;text-align:center;position:relative;overflow:hidden}
-.skill::before{content:'';position:absolute;inset:0;background:radial-gradient(circle at 50% 50%,rgba(0,232,48,.1),transparent 70%);opacity:0;transition:opacity .35s}
-.skill:hover{border-color:var(--green);background:rgba(0,232,48,.06);transform:translateY(-4px) scale(1.02);animation:pulse .8s infinite}
-.skill:hover::before{opacity:1}
-.skill-icon{font-size:30px;margin-bottom:12px;display:block}
-.skill-name{font-family:var(--fmono);font-size:10px;color:var(--white);letter-spacing:2px;display:block}
-.skill-cat{font-size:11px;color:var(--gray);margin-top:5px}
+/* COMBO METER */
+#combo-meter{border:1px solid rgba(0,232,48,.2);background:rgba(0,232,48,.03);
+  padding:16px 24px;margin-bottom:40px;display:flex;align-items:center;gap:20px;}
+#combo-label{font-family:var(--fmono);font-size:10px;color:var(--green);letter-spacing:3px;}
+#combo-text{font-family:var(--fdisp);font-size:24px;color:var(--warn);letter-spacing:3px;transition:opacity .2s;}
+#combo-badge{font-family:var(--fmono);font-size:9px;color:#000;background:var(--warn);
+  padding:4px 12px;letter-spacing:2px;margin-left:auto;}
 
-/* TECH STACK ROW */
+/* FLIP SKILL CARDS */
+.skill-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(175px,1fr));gap:14px;margin-bottom:56px;}
+.skill{border:1px solid rgba(0,232,48,.14);background:transparent;perspective:800px;height:130px;cursor:pointer;}
+.skill-inner{position:relative;width:100%;height:100%;transform-style:preserve-3d;transition:transform .6s;}
+.skill:hover .skill-inner{transform:rotateY(180deg);}
+.skill-front,.skill-back{position:absolute;inset:0;backface-visibility:hidden;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;padding:16px;}
+.skill-front{background:rgba(0,232,48,.02);}
+.skill-back{transform:rotateY(180deg);background:rgba(0,232,48,.12);border:1px solid rgba(0,232,48,.3);}
+.skill-icon{font-size:28px;margin-bottom:10px;display:block}
+.skill-name{font-family:var(--fmono);font-size:13px;color:var(--white);letter-spacing:2px;display:block}
+.skill-cat{font-size:11px;color:var(--gray);margin-top:4px}
+.skill-lv{font-family:var(--fmono);font-size:10px;color:var(--green);letter-spacing:2px;margin-bottom:8px;}
+.skill-desc{font-size:11px;color:var(--text);text-align:center;line-height:1.5;opacity:.85;}
+
+/* TECH STACK */
 .techstack{display:flex;flex-wrap:wrap;gap:10px;margin-bottom:56px}
-.ts-item{font-family:var(--fmono);font-size:10px;letter-spacing:2px;padding:8px 18px;border:1px solid rgba(0,232,48,.2);color:var(--green);background:rgba(0,232,48,.04);transition:all .3s}
+.ts-item{font-family:var(--fmono);font-size:13px;letter-spacing:2px;padding:8px 18px;
+  border:1px solid rgba(0,232,48,.2);color:var(--green);background:rgba(0,232,48,.04);transition:all .3s}
 .ts-item:hover{border-color:var(--green);background:rgba(0,232,48,.1);text-shadow:0 0 10px var(--green)}
 
-/* CURRENTLY LEARNING */
-.learning-box{border:1px solid rgba(255,199,0,.28);background:rgba(255,199,0,.03);padding:26px 36px;display:inline-flex;align-items:center;gap:24px;margin-bottom:60px}
-.ll{font-family:var(--fmono);font-size:9.5px;color:var(--warn);letter-spacing:3px}
-.lv{font-family:var(--fdisp);font-size:32px;color:var(--warn);letter-spacing:4px}
-.lv::before{content:'🧠 '}
+/* LEARNING BOX */
+.learning-box{border:1px solid rgba(255,199,0,.28);background:rgba(255,199,0,.03);
+  padding:26px 36px;display:inline-flex;align-items:center;gap:24px;margin-bottom:60px}
+.ll{font-family:var(--fmono);font-size:11px;color:var(--warn);letter-spacing:3px}
+.lv-label{font-family:var(--fdisp);font-size:32px;color:var(--warn);letter-spacing:4px}
 
 /* STRENGTH BARS */
 .strengths{display:grid;grid-template-columns:1fr 1fr;gap:40px}
-.strength-col{}
 .strength-row{margin-bottom:22px}
 .strength-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px}
 .strength-name{font-size:14px;color:var(--white);font-weight:600}
-.strength-pct{font-family:var(--fmono);font-size:10px;color:var(--green)}
+.strength-pct{font-family:var(--fmono);font-size:11px;color:var(--green);letter-spacing:1px;}
 .strength-bar{height:4px;background:rgba(0,232,48,.1);border:1px solid rgba(0,232,48,.15)}
 .strength-fill{height:100%;background:linear-gradient(90deg,var(--green),var(--green2));width:0%;transition:width 1.6s ease}
 
-footer{border-top:1px solid rgba(0,232,48,.14);padding:32px 60px;display:flex;justify-content:space-between;align-items:center;font-family:var(--fmono);font-size:9px;color:var(--gray);letter-spacing:2px;position:relative;z-index:1}
+/* FOOTER */
+footer{border-top:1px solid rgba(0,232,48,.14);padding:32px 60px;display:flex;
+  justify-content:space-between;align-items:center;font-family:var(--fmono);font-size:9px;
+  color:var(--gray);letter-spacing:2px;position:relative;z-index:1}
 .f-logo{font-family:var(--fdisp);font-size:30px;color:var(--green);text-shadow:0 0 20px var(--green)}
 .socials a{color:var(--green);font-size:18px;margin-left:16px;transition:all .3s;opacity:.65}
 .socials a:hover{opacity:1;text-shadow:0 0 14px var(--green)}
 .rv{opacity:0;transform:translateY(32px)}
-@media(max-width:860px){nav{padding:0 16px}.nav-links{display:none}.banner{grid-template-columns:1fr}.banner{padding:80px 20px 50px}#mini-ball-canvas{display:none}.content{padding:60px 20px}.strengths{grid-template-columns:1fr}footer{flex-direction:column;gap:12px;text-align:center;padding:28px 20px}}
+
+@media(max-width:860px){
+  nav{padding:0 16px}.nav-links{display:none}
+  .banner{grid-template-columns:1fr;padding:80px 20px 50px}
+  #mini-ball-canvas{display:none}
+  .content{padding:60px 20px}
+  .strengths{grid-template-columns:1fr}
+  footer{flex-direction:column;gap:12px;text-align:center;padding:28px 20px}
+}
 </style>
 </head>
 <body>
+
+<!-- TACTICAL 3D BACKGROUND -->
+<canvas id="tactical-bg"></canvas>
+<div id="tactical-overlay"></div>
+
+<!-- TOOLTIP -->
+<div id="node-tip"></div>
+
+<!-- NODE POPUP — HTML must be in body, NOT inside script -->
+<div id="node-popup">
+  <div id="np-close">✕</div>
+  <div id="np-title"></div>
+  <div id="np-level"></div>
+  <div id="np-projects"></div>
+</div>
+
+<!-- NAV -->
 <nav>
   <a href="index.html" class="nav-logo">DJ</a>
   <ul class="nav-links">
@@ -100,6 +178,8 @@ footer{border-top:1px solid rgba(0,232,48,.14);padding:32px 60px;display:flex;ju
 </nav>
 
 <div class="wrap">
+
+  <!-- BANNER -->
   <div class="banner">
     <div class="banner-left">
       <span class="banner-tag">MODULE_SKILLS · CAPABILITY MATRIX</span>
@@ -111,25 +191,32 @@ footer{border-top:1px solid rgba(0,232,48,.14);padding:32px 60px;display:flex;ju
 
   <div class="content">
 
-    <!-- SKILL ICONS -->
+    <!-- COMBO METER -->
+    <div id="combo-meter">
+      <span id="combo-label">⚡ CURRENT BUILD:</span>
+      <span id="combo-text">AI + HARDWARE + SYSTEMS</span>
+      <span id="combo-badge">COMBO ACTIVE ✓</span>
+    </div>
+
+    <!-- SKILL FLIP CARDS -->
     <div class="s-header">
       <span class="s-tag">TOOLS</span>
       <h2 class="s-title rv">ARSENAL</h2>
       <div class="s-line"></div>
     </div>
     <div class="skill-grid">
-      <div class="skill rv"><span class="skill-icon">🐍</span><span class="skill-name">PYTHON</span><div class="skill-cat">Primary Language</div></div>
-      <div class="skill rv"><span class="skill-icon">🧠</span><span class="skill-name">TENSORFLOW</span><div class="skill-cat">ML Framework</div></div>
-      <div class="skill rv"><span class="skill-icon">🌐</span><span class="skill-name">FLASK</span><div class="skill-cat">Web Framework</div></div>
-      <div class="skill rv"><span class="skill-icon">⚡</span><span class="skill-name">ARDUINO</span><div class="skill-cat">Microcontroller</div></div>
-      <div class="skill rv"><span class="skill-icon">🍓</span><span class="skill-name">RASPBERRY PI</span><div class="skill-cat">Edge Computing</div></div>
-      <div class="skill rv"><span class="skill-icon">📊</span><span class="skill-name">MATLAB</span><div class="skill-cat">Engineering Tools</div></div>
-      <div class="skill rv"><span class="skill-icon">📦</span><span class="skill-name">GITHUB</span><div class="skill-cat">Version Control</div></div>
-      <div class="skill rv"><span class="skill-icon">🔩</span><span class="skill-name">HW INTEGRATION</span><div class="skill-cat">Core Strength</div></div>
-      <div class="skill rv"><span class="skill-icon">🤖</span><span class="skill-name">AI-ASSISTED DEV</span><div class="skill-cat">Workflow</div></div>
-      <div class="skill rv"><span class="skill-icon">🔬</span><span class="skill-name">SENSOR FUSION</span><div class="skill-cat">IoT Design</div></div>
-      <div class="skill rv"><span class="skill-icon">🛡️</span><span class="skill-name">CYBERSECURITY</span><div class="skill-cat">Network / Edge</div></div>
-      <div class="skill rv"><span class="skill-icon">📐</span><span class="skill-name">RAPID PROTOTYPING</span><div class="skill-cat">Design Strength</div></div>
+      <div class="skill rv"><div class="skill-inner"><div class="skill-front"><span class="skill-icon">🐍</span><span class="skill-name">PYTHON</span><div class="skill-cat">Primary Language</div></div><div class="skill-back"><span class="skill-lv">⭐⭐⭐⭐ LV 82</span><span class="skill-desc">Summons scripts faster than coffee cools ☕</span></div></div></div>
+      <div class="skill rv"><div class="skill-inner"><div class="skill-front"><span class="skill-icon">🧠</span><span class="skill-name">TENSORFLOW</span><div class="skill-cat">ML Framework</div></div><div class="skill-back"><span class="skill-lv">⭐⭐⭐⭐ LV 78</span><span class="skill-desc">Trains models that run without internet 🌐❌</span></div></div></div>
+      <div class="skill rv"><div class="skill-inner"><div class="skill-front"><span class="skill-icon">🌐</span><span class="skill-name">FLASK</span><div class="skill-cat">Web Framework</div></div><div class="skill-back"><span class="skill-lv">⭐⭐⭐ LV 74</span><span class="skill-desc">Spins up dashboards on a Raspberry Pi 🍓</span></div></div></div>
+      <div class="skill rv"><div class="skill-inner"><div class="skill-front"><span class="skill-icon">⚡</span><span class="skill-name">ARDUINO</span><div class="skill-cat">Microcontroller</div></div><div class="skill-back"><span class="skill-lv">⭐⭐⭐⭐ LV 80</span><span class="skill-desc">Speaks to sensors in their native language 📡</span></div></div></div>
+      <div class="skill rv"><div class="skill-inner"><div class="skill-front"><span class="skill-icon">🍓</span><span class="skill-name">RASPBERRY PI</span><div class="skill-cat">Edge Computing</div></div><div class="skill-back"><span class="skill-lv">⭐⭐⭐⭐ LV 83</span><span class="skill-desc">Runs full AI offline. In a box. On a farm 🌾</span></div></div></div>
+      <div class="skill rv"><div class="skill-inner"><div class="skill-front"><span class="skill-icon">📊</span><span class="skill-name">MATLAB</span><div class="skill-cat">Engineering Tools</div></div><div class="skill-back"><span class="skill-lv">⭐⭐⭐ LV 72</span><span class="skill-desc">Tames Fourier transforms before breakfast 🌅</span></div></div></div>
+      <div class="skill rv"><div class="skill-inner"><div class="skill-front"><span class="skill-icon">📦</span><span class="skill-name">GITHUB</span><div class="skill-cat">Version Control</div></div><div class="skill-back"><span class="skill-lv">⭐⭐⭐ LV 75</span><span class="skill-desc">Commits at midnight, pushes at dawn 🌙</span></div></div></div>
+      <div class="skill rv"><div class="skill-inner"><div class="skill-front"><span class="skill-icon">🔩</span><span class="skill-name">HW INTEGRATION</span><div class="skill-cat">Core Strength</div></div><div class="skill-back"><span class="skill-lv">⭐⭐⭐⭐⭐ LV 90</span><span class="skill-desc">Makes circuits talk to code like old friends 🤝</span></div></div></div>
+      <div class="skill rv"><div class="skill-inner"><div class="skill-front"><span class="skill-icon">🤖</span><span class="skill-name">AI-ASSISTED DEV</span><div class="skill-cat">Workflow</div></div><div class="skill-back"><span class="skill-lv">⭐⭐⭐⭐⭐ LV 88</span><span class="skill-desc">Pairs with AI like Messi with De Bruyne ⚽</span></div></div></div>
+      <div class="skill rv"><div class="skill-inner"><div class="skill-front"><span class="skill-icon">🔬</span><span class="skill-name">SENSOR FUSION</span><div class="skill-cat">IoT Design</div></div><div class="skill-back"><span class="skill-lv">⭐⭐⭐⭐ LV 79</span><span class="skill-desc">Smells gas, hears pests, sees decay 👃</span></div></div></div>
+      <div class="skill rv"><div class="skill-inner"><div class="skill-front"><span class="skill-icon">🛡️</span><span class="skill-name">CYBERSECURITY</span><div class="skill-cat">Network / Edge</div></div><div class="skill-back"><span class="skill-lv">⭐⭐⭐ LV 71</span><span class="skill-desc">Scans ports while others sleep 🌙🔒</span></div></div></div>
+      <div class="skill rv"><div class="skill-inner"><div class="skill-front"><span class="skill-icon">📐</span><span class="skill-name">RAPID PROTOTYPING</span><div class="skill-cat">Design Strength</div></div><div class="skill-back"><span class="skill-lv">⭐⭐⭐⭐ LV 86</span><span class="skill-desc">Idea to working hardware in 48h flat ⏱️</span></div></div></div>
     </div>
 
     <!-- TECH STACK -->
@@ -139,17 +226,20 @@ footer{border-top:1px solid rgba(0,232,48,.14);padding:32px 60px;display:flex;ju
       <div class="s-line"></div>
     </div>
     <div class="techstack rv">
-      <span class="ts-item">Python</span><span class="ts-item">TensorFlow</span><span class="ts-item">Flask</span>
-      <span class="ts-item">Arduino</span><span class="ts-item">Raspberry Pi</span><span class="ts-item">MATLAB</span>
-      <span class="ts-item">GitHub</span><span class="ts-item">Ollama</span><span class="ts-item">TensorFlow Lite</span>
-      <span class="ts-item">YAMNet</span><span class="ts-item">OpenCV</span><span class="ts-item">I2C / SPI</span>
-      <span class="ts-item">MQ Sensors</span><span class="ts-item">Edge AI</span><span class="ts-item">Linux CLI</span>
+      <span class="ts-item">Python</span><span class="ts-item">TensorFlow</span>
+      <span class="ts-item">Flask</span><span class="ts-item">Arduino</span>
+      <span class="ts-item">Raspberry Pi</span><span class="ts-item">MATLAB</span>
+      <span class="ts-item">GitHub</span><span class="ts-item">Ollama</span>
+      <span class="ts-item">TensorFlow Lite</span><span class="ts-item">YAMNet</span>
+      <span class="ts-item">OpenCV</span><span class="ts-item">I2C / SPI</span>
+      <span class="ts-item">MQ Sensors</span><span class="ts-item">Edge AI</span>
+      <span class="ts-item">Linux CLI</span>
     </div>
 
-    <!-- LEARNING -->
+    <!-- CURRENTLY LEARNING -->
     <div class="learning-box rv">
       <span class="ll">// CURRENTLY LOADING</span>
-      <span class="lv">DIGITAL ELECTRONICS</span>
+      <span class="lv-label">🧠 DIGITAL ELECTRONICS</span>
     </div>
 
     <!-- STRENGTH BARS -->
@@ -159,21 +249,21 @@ footer{border-top:1px solid rgba(0,232,48,.14);padding:32px 60px;display:flex;ju
       <div class="s-line"></div>
     </div>
     <div class="strengths rv">
-      <div class="strength-col">
-        <div class="strength-row"><div class="strength-header"><span class="strength-name">Hardware Integration</span><span class="strength-pct">90%</span></div><div class="strength-bar"><div class="strength-fill" data-w="90"></div></div></div>
-        <div class="strength-row"><div class="strength-header"><span class="strength-name">Python</span><span class="strength-pct">82%</span></div><div class="strength-bar"><div class="strength-fill" data-w="82"></div></div></div>
-        <div class="strength-row"><div class="strength-header"><span class="strength-name">AI-Assisted Development</span><span class="strength-pct">88%</span></div><div class="strength-bar"><div class="strength-fill" data-w="88"></div></div></div>
-        <div class="strength-row"><div class="strength-header"><span class="strength-name">System Design</span><span class="strength-pct">85%</span></div><div class="strength-bar"><div class="strength-fill" data-w="85"></div></div></div>
+      <div>
+        <div class="strength-row"><div class="strength-header"><span class="strength-name">Hardware Integration</span><span class="strength-pct">LV 90 ⭐⭐⭐⭐⭐</span></div><div class="strength-bar"><div class="strength-fill" data-w="90"></div></div></div>
+        <div class="strength-row"><div class="strength-header"><span class="strength-name">Python</span><span class="strength-pct">LV 82 ⭐⭐⭐⭐</span></div><div class="strength-bar"><div class="strength-fill" data-w="82"></div></div></div>
+        <div class="strength-row"><div class="strength-header"><span class="strength-name">AI-Assisted Dev</span><span class="strength-pct">LV 88 ⭐⭐⭐⭐⭐</span></div><div class="strength-bar"><div class="strength-fill" data-w="88"></div></div></div>
+        <div class="strength-row"><div class="strength-header"><span class="strength-name">System Design</span><span class="strength-pct">LV 85 ⭐⭐⭐⭐⭐</span></div><div class="strength-bar"><div class="strength-fill" data-w="85"></div></div></div>
       </div>
-      <div class="strength-col">
-        <div class="strength-row"><div class="strength-header"><span class="strength-name">Edge AI / IoT</span><span class="strength-pct">78%</span></div><div class="strength-bar"><div class="strength-fill" data-w="78"></div></div></div>
-        <div class="strength-row"><div class="strength-header"><span class="strength-name">Rapid Prototyping</span><span class="strength-pct">86%</span></div><div class="strength-bar"><div class="strength-fill" data-w="86"></div></div></div>
-        <div class="strength-row"><div class="strength-header"><span class="strength-name">MATLAB</span><span class="strength-pct">72%</span></div><div class="strength-bar"><div class="strength-fill" data-w="72"></div></div></div>
-        <div class="strength-row"><div class="strength-header"><span class="strength-name">Problem Solving</span><span class="strength-pct">92%</span></div><div class="strength-bar"><div class="strength-fill" data-w="92"></div></div></div>
+      <div>
+        <div class="strength-row"><div class="strength-header"><span class="strength-name">Edge AI / IoT</span><span class="strength-pct">LV 78 ⭐⭐⭐⭐</span></div><div class="strength-bar"><div class="strength-fill" data-w="78"></div></div></div>
+        <div class="strength-row"><div class="strength-header"><span class="strength-name">Rapid Prototyping</span><span class="strength-pct">LV 86 ⭐⭐⭐⭐⭐</span></div><div class="strength-bar"><div class="strength-fill" data-w="86"></div></div></div>
+        <div class="strength-row"><div class="strength-header"><span class="strength-name">MATLAB</span><span class="strength-pct">LV 72 ⭐⭐⭐</span></div><div class="strength-bar"><div class="strength-fill" data-w="72"></div></div></div>
+        <div class="strength-row"><div class="strength-header"><span class="strength-name">Problem Solving</span><span class="strength-pct">LV 92 ⭐⭐⭐⭐⭐</span></div><div class="strength-bar"><div class="strength-fill" data-w="92"></div></div></div>
       </div>
     </div>
 
-  </div>
+  </div><!-- /content -->
 
   <footer>
     <div class="f-logo">DJ</div>
@@ -184,12 +274,20 @@ footer{border-top:1px solid rgba(0,232,48,.14);padding:32px 60px;display:flex;ju
       <a href="https://discord.com/channels/@me" target="_blank"><i class="fab fa-discord"></i></a>
     </div>
   </footer>
-</div>
 
+</div><!-- /wrap -->
+
+<!-- ══════════ SCRIPTS — nothing HTML inside here ══════════ -->
 <script>
-const tick=()=>{const n=new Date(),p=v=>String(v).padStart(2,'0');document.getElementById('clock').textContent=`${p(n.getHours()%12||12)}:${p(n.getMinutes())}:${p(n.getSeconds())} ${n.getHours()>=12?'PM':'AM'} IST`};setInterval(tick,1000);tick();
+/* CLOCK */
+const tick=()=>{
+  const n=new Date(),p=v=>String(v).padStart(2,'0');
+  document.getElementById('clock').textContent=
+    `${p(n.getHours()%12||12)}:${p(n.getMinutes())}:${p(n.getSeconds())} ${n.getHours()>=12?'PM':'AM'} IST`;
+};
+setInterval(tick,1000);tick();
 
-/* MINI SPINNING BALL */
+/* ── MINI SPINNING BALL ──────────────────────── */
 (function(){
   const cv=document.getElementById('mini-ball-canvas');
   if(!cv||typeof THREE==='undefined')return;
@@ -204,9 +302,11 @@ const tick=()=>{const n=new Date(),p=v=>String(v).padStart(2,'0');document.getEl
     const S=512,c=document.createElement('canvas');c.width=c.height=S;
     const x=c.getContext('2d');
     x.fillStyle='#f0f0f0';x.fillRect(0,0,S,S);
-    const pts=[[256,40,37],[256,472,37],[40,256,37],[472,256,37],[95,95,34],[412,95,34],[95,412,34],[412,412,34],[256,256,38]];
-    x.fillStyle='#111';
-    pts.forEach(([px,py,r])=>{x.beginPath();for(let i=0;i<5;i++){const a=i*2*Math.PI/5-Math.PI/2;i?x.lineTo(px+r*Math.cos(a),py+r*Math.sin(a)):x.moveTo(px+r*Math.cos(a),py+r*Math.sin(a));}x.closePath();x.fill();});
+    [[256,40,37],[256,472,37],[40,256,37],[472,256,37],[95,95,34],[412,95,34],[95,412,34],[412,412,34],[256,256,38]].forEach(([px,py,r])=>{
+      x.fillStyle='#111';x.beginPath();
+      for(let i=0;i<5;i++){const a=i*2*Math.PI/5-Math.PI/2;i?x.lineTo(px+r*Math.cos(a),py+r*Math.sin(a)):x.moveTo(px+r*Math.cos(a),py+r*Math.sin(a));}
+      x.closePath();x.fill();
+    });
     return new THREE.CanvasTexture(c);
   }
   const ball=new THREE.Mesh(new THREE.SphereGeometry(1.2,48,48),new THREE.MeshPhongMaterial({map:mkTex(),shininess:140}));
@@ -219,11 +319,206 @@ const tick=()=>{const n=new Date(),p=v=>String(v).padStart(2,'0');document.getEl
   (function loop(){requestAnimationFrame(loop);t+=.014;ball.rotation.y+=.012+mx*.04;ball.rotation.x+=.004+my*.02;ball.position.y=Math.sin(t)*.15;rg.rotation.x=t*.5;rg.material.opacity=.22+Math.sin(t*2)*.1;rr.render(scene,cam);})();
 })();
 
+/* ── TACTICAL FORMATION THREE.JS ─────────────── */
+(function(){
+  const cv=document.getElementById('tactical-bg');
+  if(!cv||typeof THREE==='undefined')return;
+  const rr=new THREE.WebGLRenderer({canvas:cv,alpha:false,antialias:true});
+  rr.setPixelRatio(Math.min(devicePixelRatio,2));
+  const scene=new THREE.Scene();
+  scene.background=new THREE.Color(0x020b05);
+  scene.fog=new THREE.FogExp2(0x020b05,0.012);
+  const cam=new THREE.PerspectiveCamera(55,1,.1,300);
+  cam.position.set(0,38,52);cam.lookAt(0,0,0);
+  scene.add(new THREE.AmbientLight(0x0a1a0a,1));
+  const dl=new THREE.DirectionalLight(0xffd700,.6);dl.position.set(0,30,20);scene.add(dl);
+
+  /* PITCH */
+  function mkP(){
+    const S=1024,c=document.createElement('canvas');c.width=S;c.height=Math.round(S*105/68);
+    const x=c.getContext('2d'),W=S,H=c.height;
+    for(let i=0;i<8;i++){x.fillStyle=i%2?'#0a2210':'#081d0d';x.fillRect(i*(W/8),0,W/8,H);}
+    x.strokeStyle='rgba(255,255,255,.5)';x.lineWidth=7;
+    const m=36;x.strokeRect(m,m,W-m*2,H-m*2);
+    x.beginPath();x.moveTo(m,H/2);x.lineTo(W-m,H/2);x.stroke();
+    x.beginPath();x.arc(W/2,H/2,W*.11,0,Math.PI*2);x.stroke();
+    x.fillStyle='rgba(255,255,255,.5)';x.beginPath();x.arc(W/2,H/2,8,0,Math.PI*2);x.fill();
+    const pbW=W*.33,pbH=H*.12;
+    x.strokeRect(W/2-pbW/2,m,pbW,pbH);x.strokeRect(W/2-pbW/2,H-m-pbH,pbW,pbH);
+    return new THREE.CanvasTexture(c);
+  }
+  const pitch=new THREE.Mesh(new THREE.PlaneGeometry(68,105),new THREE.MeshLambertMaterial({map:mkP()}));
+  pitch.rotation.x=-Math.PI/2;scene.add(pitch);
+
+  /* NODES — 4-3-3 = skills */
+  const NODES=[
+    {x:0,   z:42,  label:'SYSTEM DESIGN',  color:0xffd700, size:1.6},
+    {x:-24, z:26,  label:'ARDUINO',        color:0x00c44a, size:1.3},
+    {x:-8,  z:26,  label:'RASPBERRY PI',   color:0x00c44a, size:1.3},
+    {x:8,   z:26,  label:'HW INTEGRATION', color:0x00c44a, size:1.3},
+    {x:24,  z:26,  label:'SENSOR FUSION',  color:0x00c44a, size:1.3},
+    {x:-16, z:6,   label:'PYTHON',         color:0xffd700, size:1.5},
+    {x:0,   z:4,   label:'TENSORFLOW',     color:0xffd700, size:1.5},
+    {x:16,  z:6,   label:'MATLAB',         color:0xffd700, size:1.5},
+    {x:-18, z:-18, label:'EDGE AI',        color:0xff4444, size:1.6},
+    {x:0,   z:-22, label:'J.A.R.V.I.S',   color:0xff4444, size:1.8},
+    {x:18,  z:-18, label:'FLASK',          color:0xff4444, size:1.6},
+  ];
+
+  const nodeMeshes=[];
+  const tip=document.getElementById('node-tip');
+
+  NODES.forEach((n,idx)=>{
+    const mat=new THREE.MeshPhongMaterial({color:n.color,emissive:n.color,emissiveIntensity:.3,shininess:80,transparent:true,opacity:.9});
+    const mesh=new THREE.Mesh(new THREE.SphereGeometry(n.size,24,24),mat);
+    mesh.position.set(n.x,n.size,n.z);
+    mesh.userData={label:n.label,baseY:n.size,phase:Math.random()*Math.PI*2};
+    scene.add(mesh);nodeMeshes.push(mesh);
+
+    const ring=new THREE.Mesh(
+      new THREE.TorusGeometry(n.size+.5,.07,8,40),
+      new THREE.MeshBasicMaterial({color:n.color,transparent:true,opacity:.4})
+    );
+    ring.rotation.x=Math.PI/2;ring.position.set(n.x,.15,n.z);
+    scene.add(ring);mesh.userData.ring=ring;
+
+    if(idx>0){
+      const prev=NODES[idx-1];
+      const lineGeo=new THREE.BufferGeometry().setFromPoints([
+        new THREE.Vector3(prev.x,.1,prev.z),new THREE.Vector3(n.x,.1,n.z)
+      ]);
+      scene.add(new THREE.Line(lineGeo,new THREE.LineBasicMaterial({color:0xffd700,transparent:true,opacity:.12})));
+    }
+  });
+
+  /* RAYCASTER */
+  const raycaster=new THREE.Raycaster();
+  const mouse=new THREE.Vector2(-999,-999);
+  let mx=0,my=0;
+
+  window.addEventListener('mousemove', e => {
+    // Only track the mouse if we aren't hovering over the main content overlay
+    
+
+    mx = (e.clientX / innerWidth - .5) * 2;
+    my = (e.clientY / innerHeight - .5) * 2;
+    mouse.x = (e.clientX / innerWidth) * 2 - 1;
+    mouse.y = -(e.clientY / innerHeight) * 2 + 1;
+    
+    raycaster.setFromCamera(mouse, cam);
+    const hits = raycaster.intersectObjects(nodeMeshes);
+    
+    if (hits.length) {
+      tip.style.left = (e.clientX + 16) + 'px';
+      tip.style.top = (e.clientY - 8) + 'px';
+      tip.textContent = hits[0].object.userData.label;
+      tip.style.opacity = 1;
+      window._lastHoveredNode = hits[0].object.userData.label;
+      document.body.style.cursor = 'pointer';
+    } else {
+      tip.style.opacity = 0;
+      document.body.style.cursor = 'crosshair';
+      window._lastHoveredNode = null;
+    }
+  });
+
+  function resize(){
+    const w = innerWidth, h = innerHeight;
+    // Fix: Compare against clientWidth/clientHeight (CSS pixels) to prevent infinite loops
+    if(cv.width!==w||cv.height!==h){
+      rr.setSize(w, h, false);
+      cam.aspect = w / h;
+      cam.updateProjectionMatrix();
+    }
+  }
+
+  let t=0;
+  (function loop(){
+    requestAnimationFrame(loop);resize();t+=.012;
+    nodeMeshes.forEach(m=>{
+      m.position.y=m.userData.baseY+Math.sin(t*1.8+m.userData.phase)*.4;
+      m.userData.ring.position.y=.15;
+      m.material.emissiveIntensity=.25+Math.sin(t*2+m.userData.phase)*.2;
+      m.userData.ring.material.opacity=.25+Math.sin(t*2+m.userData.phase)*.2;
+      m.userData.ring.rotation.z+=.008;
+    });
+    cam.position.x+=(mx*6-cam.position.x)*.02;
+    cam.position.y+=(38+my*-4-cam.position.y)*.02;
+    cam.lookAt(0,2,0);
+    rr.render(scene,cam);
+  })();
+})();
+
+/* ── COMBO METER ──────────────────────────────── */
+const combos=['AI + HARDWARE + SYSTEMS','EDGE + CLOUD + LOCAL AI','CIRCUITS + CODE + COFFEE','SENSOR + MODEL + DASHBOARD','IRON MAN PROTOCOL ACTIVE 🦾'];
+let ci=0;
+const comboEl=document.getElementById('combo-text');
+comboEl.style.transition='opacity .2s';
+setInterval(()=>{
+  ci=(ci+1)%combos.length;
+  comboEl.style.opacity=0;
+  setTimeout(()=>{comboEl.textContent=combos[ci];comboEl.style.opacity=1;},200);
+},3000);
+
+/* ── NODE CLICK POPUP ─────────────────────────── */
+const NODE_DATA={
+  'SYSTEM DESIGN':{lv:'LV 90 ⭐⭐⭐⭐⭐',projects:['Edge-Olfaction Architecture','J.A.R.V.I.S. Modular System','Dual-Processor Pi+Arduino']},
+  'ARDUINO':      {lv:'LV 80 ⭐⭐⭐⭐',  projects:['Analog Signal Processing','Sensor Calibration Profiles','Edge-Olfaction Hardware']},
+  'RASPBERRY PI': {lv:'LV 83 ⭐⭐⭐⭐',  projects:['J.A.R.V.I.S. Neural Core','Edge AI Deployment','Flask Dashboard Host']},
+  'HW INTEGRATION':{lv:'LV 90 ⭐⭐⭐⭐⭐',projects:['Dual-Processor Design','Sensor Array Assembly','Wiring + ADC Routing']},
+  'SENSOR FUSION':{lv:'LV 79 ⭐⭐⭐⭐',  projects:['MQ Gas Sensors','Piezoelectric Acoustics','HC-SR04 Ultrasonic']},
+  'PYTHON':       {lv:'LV 82 ⭐⭐⭐⭐',  projects:['FC Manager AI','J.A.R.V.I.S. All Modules','Edge-Olfaction CLI']},
+  'TENSORFLOW':   {lv:'LV 78 ⭐⭐⭐⭐',  projects:['PoultryHealth-AI (YAMNet)','TFLite Edge Deployment','MFCC Audio Model']},
+  'MATLAB':       {lv:'LV 72 ⭐⭐⭐',    projects:['Signal Processing','Fourier / Laplace Work','Engineering Math']},
+  'EDGE AI':      {lv:'LV 84 ⭐⭐⭐⭐⭐',projects:['Edge-Olfaction System','PoultryHealth Acoustic','J.A.R.V.I.S. Offline LLM']},
+  'J.A.R.V.I.S': {lv:'LV 88 ⭐⭐⭐⭐⭐',projects:['Neural Core (Llama 3.2)','System Diagnostic Suite','Security Matrix']},
+  'FLASK':        {lv:'LV 74 ⭐⭐⭐',    projects:['Edge-Olfaction Dashboard','Real-time Sensor Polling','Event Log UI']},
+};
+const popup=document.getElementById('node-popup');
+document.getElementById('np-close').onclick=()=>{popup.style.display='none';};
+window.addEventListener('click',()=>{
+  if(window._lastHoveredNode){
+    const d=NODE_DATA[window._lastHoveredNode];
+    if(d){
+      document.getElementById('np-title').textContent=window._lastHoveredNode;
+      document.getElementById('np-level').textContent=d.lv;
+      document.getElementById('np-projects').innerHTML=
+        '<div style="color:var(--green);font-size:10px;letter-spacing:2px;margin-bottom:10px;">// UNLOCKED PROJECTS</div>'+
+        d.projects.map(p=>`• ${p}`).join('<br>');
+      popup.style.display='block';
+    }
+  }
+});
+
+/* ── GSAP REVEALS ─────────────────────────────── */
 gsap.registerPlugin(ScrollTrigger);
-gsap.utils.toArray('.rv').forEach(el=>{gsap.fromTo(el,{y:32,opacity:0},{y:0,opacity:1,duration:.75,ease:'power2.out',scrollTrigger:{trigger:el,start:'top 88%',toggleActions:'play none none reverse'}});});
+gsap.utils.toArray('.rv').forEach(el=>{
+  gsap.fromTo(el,{y:32,opacity:0},{y:0,opacity:1,duration:.75,ease:'power2.out',
+    scrollTrigger:{trigger:el,start:'top 88%',toggleActions:'play none none reverse'}});
+});
 gsap.from('.banner-title',{duration:1.1,y:50,opacity:0,delay:.3,ease:'power3.out'});
 gsap.from('.nav-links li',{duration:.6,opacity:0,y:-14,stagger:.06,delay:.3});
-document.querySelectorAll('.strength-fill').forEach(f=>{const w=f.dataset.w;ScrollTrigger.create({trigger:f,start:'top 85%',onEnter:()=>{f.style.width=w+'%';}});});
+document.querySelectorAll('.strength-fill').forEach(f=>{
+  const w=f.dataset.w;
+  ScrollTrigger.create({trigger:f,start:'top 85%',onEnter:()=>{f.style.width=w+'%';}});
+});
+
+/* ── EASTER EGG — type IDDQD ─────────────────── */
+let _kbuf='';
+document.addEventListener('keydown',e=>{
+  _kbuf+=e.key.toUpperCase();
+  if(_kbuf.length>5)_kbuf=_kbuf.slice(-5);
+  if(_kbuf==='IDDQD'){
+    document.body.style.transition='filter 0.5s';
+    let hue=0;
+    const rainbow=setInterval(()=>{hue=(hue+3)%360;document.body.style.filter=`hue-rotate(${hue}deg) saturate(2)`;},30);
+    const msg=document.createElement('div');
+    msg.textContent='☠️ GOD MODE ACTIVATED ☠️';
+    msg.style.cssText='position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);font-family:Bebas Neue,sans-serif;font-size:80px;color:#fff;z-index:9999;text-shadow:0 0 40px #fff;pointer-events:none;';
+    document.body.appendChild(msg);
+    setTimeout(()=>{clearInterval(rainbow);document.body.style.filter='';msg.remove();_kbuf='';},4000);
+  }
+});
 </script>
 </body>
 </html>
