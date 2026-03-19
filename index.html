@@ -497,10 +497,12 @@ footer{
 
 <!-- VIDEO SWITCHER -->
 <div id="vid-switcher">
-  <div class="vsw active" onclick="switchVid(0)">⚽ MESSI</div>
-  <div class="vsw" onclick="switchVid(1)">🎯 CR7</div>
-  <div class="vsw" onclick="switchVid(2)">🌀 NEYMAR</div>
-  <div class="vsw" onclick="switchVid(3)">🏆 UCL</div>
+  <div class="vsw active" onclick="switchVid(0)">🏟️ STADIUM</div>
+  <div class="vsw" onclick="switchVid(1)">⚽ DRIBBLE</div>
+  <div class="vsw" onclick="switchVid(2)">🥅 GOALPLAY</div>
+  <div class="vsw" onclick="switchVid(3)">🎯 BALL</div>
+  <div class="vsw" onclick="switchVid(4)">🔥 FOOTY 5</div>
+  <div class="vsw" onclick="switchVid(5)">💫 FOOTY 6</div>
 </div>
 
 <!-- CUSTOM CURSOR -->
@@ -804,37 +806,7 @@ setInterval(tick,1000);tick();
   });
 })();
 
-/* ── GOAL! ANIMATION ──────────────────────────── */
-function triggerGoal(){
-  const flash=document.getElementById('goal-flash');
-  const txt=document.getElementById('goal-text');
-  gsap.timeline()
-    .to(flash,{opacity:1,duration:.08})
-    .to(txt,{opacity:1,scale:1.2,duration:.15,ease:'power3.out'},0)
-    .to(flash,{opacity:0,duration:.4,delay:.1})
-    .to(txt,{opacity:0,scale:1.5,duration:.5,ease:'power2.in'},'-=.3');
-  // confetti burst
-  for(let i=0;i<60;i++) spawnConfetti();
-}
 
-function spawnConfetti(){
-  const el=document.createElement('div');
-  el.className='confetti-piece';
-  const colors=['#ffd700','#fff','#00c44a','#001489','#ff3333'];
-  el.style.background=colors[Math.floor(Math.random()*colors.length)];
-  el.style.left=Math.random()*100+'vw';
-  el.style.top=Math.random()*40+'vh';
-  el.style.width=(Math.random()*10+4)+'px';
-  el.style.height=(Math.random()*10+4)+'px';
-  el.style.borderRadius=Math.random()>.5?'50%':'2px';
-  document.body.appendChild(el);
-  gsap.fromTo(el,
-    {opacity:1,y:0,x:0,rotation:0},
-    {opacity:0,y:Math.random()*300+100,x:(Math.random()-0.5)*300,
-     rotation:Math.random()*720,duration:2+Math.random(),ease:'power2.out',
-     onComplete:()=>el.remove()}
-  );
-}
 
 /* ── 2D PITCH CANVAS OVERLAY ──────────────────── */
 (function(){
@@ -1196,9 +1168,12 @@ function spawnConfetti(){
 /* ── VIDEO BACKGROUND ─────────────────────────── */
 // Replace these IDs with any YouTube highlight video IDs you want
 const VIDS=[
-  {src:'vid1.mp4', label:'stadium'},
-  {src:'vid2.mp4', label:'DRIBBLE'},
-  {src:'vid3.mp4', label:'goalplay'},
+  {src:'https://assets.mixkit.co/videos/4262/4262-720.mp4', label:'STADIUM'},
+  {src:'https://assets.mixkit.co/videos/43484/43484-720.mp4', label:'DRIBBLE'},
+  {src:'https://assets.mixkit.co/videos/43499/43499-720.mp4', label:'GOALPLAY'},
+  
+  {src:'https://assets.mixkit.co/videos/41372/41372-720.mp4', label:'FOOTY 5'},
+  {src:'https://assets.mixkit.co/videos/43486/43486-720.mp4', label:'FOOTY 6'},
 ];
 let curVid=0;
 const player=document.getElementById('vid-player');
@@ -1210,19 +1185,7 @@ function switchVid(i){
 }
 player.addEventListener('ended',()=>switchVid((curVid+1)%VIDS.length));
 switchVid(0);
-let curVid=-1;
-function switchVid(i){
-  curVid=i;
-  const v=VIDS[i];
-  const frame=document.getElementById('yt-frame');
-  // autoplay=1 mute=1 loop=1 controls=0 disablekb=1 modestbranding=1
-  frame.src=`https://www.youtube-nocookie.com/embed/${v.id}?autoplay=1&mute=1&loop=1&playlist=${v.id}&controls=0&disablekb=1&modestbranding=1&rel=0&playsinline=1&start=5`;
-  document.querySelectorAll('.vsw').forEach((el,j)=>el.classList.toggle('active',j===i));
-}
-// Start with Messi on load
-setTimeout(()=>switchVid(0), 800);
-// Auto-cycle every 45s
-setInterval(()=>switchVid((curVid+1)%VIDS.length), 45000);
+
 
 gsap.registerPlugin(ScrollTrigger);
 gsap.utils.toArray('.rv').forEach(el=>{
