@@ -116,7 +116,7 @@ nav{
 @keyframes blink{0%,100%{opacity:1}50%{opacity:0}}
 
 /* ── MAIN CANVAS ───────────────────────────────── */
-#stadium-canvas{position:fixed;inset:0;z-index:0}
+#stadium-canvas{position:fixed;inset:0;z-index:3;opacity:.45;pointer-events:none}
 
 /* ── HERO ──────────────────────────────────────── */
 #hero{
@@ -459,6 +459,16 @@ footer{
   position:fixed;bottom:0;left:50%;transform:translateX(-50%);
   width:340px;height:200px;pointer-events:none;z-index:3;opacity:.25;
 }
+/* VIDEO BACKGROUND */
+#vid-bg{position:fixed;inset:0;z-index:1;pointer-events:none;overflow:hidden;}
+#vid-bg iframe{position:absolute;top:-10%;left:-10%;width:120%;height:120%;border:none;}
+#vid-overlay{
+  position:fixed;inset:0;z-index:2;pointer-events:none;
+  background:linear-gradient(180deg,rgba(3,6,15,.82) 0%,rgba(3,6,15,.5) 40%,rgba(3,6,15,.78) 100%);
+}
+#vid-switcher{position:fixed;bottom:80px;right:24px;z-index:20;display:flex;flex-direction:column;gap:6px;}
+.vsw{font-family:'Space Mono',monospace;font-size:8px;letter-spacing:2px;color:rgba(255,215,0,.5);border:1px solid rgba(255,215,0,.2);background:rgba(3,6,15,.8);padding:5px 10px;cursor:pointer;transition:all .25s;text-transform:uppercase;}
+.vsw:hover,.vsw.active{color:#ffd700;border-color:#ffd700;background:rgba(255,215,0,.08);}
 
 /* CONFETTI */
 .confetti-piece{
@@ -478,6 +488,20 @@ footer{
 </style>
 </head>
 <body>
+
+<!-- VIDEO BACKGROUND -->
+<div id="vid-bg">
+  <video id="vid-player" muted playsinline autoplay></video>
+</div>
+<div id="vid-overlay"></div>
+
+<!-- VIDEO SWITCHER -->
+<div id="vid-switcher">
+  <div class="vsw active" onclick="switchVid(0)">⚽ MESSI</div>
+  <div class="vsw" onclick="switchVid(1)">🎯 CR7</div>
+  <div class="vsw" onclick="switchVid(2)">🌀 NEYMAR</div>
+  <div class="vsw" onclick="switchVid(3)">🏆 UCL</div>
+</div>
 
 <!-- CUSTOM CURSOR -->
 <div id="cursor"><canvas id="cursor-canvas" width="56" height="56"></canvas></div>
@@ -740,7 +764,7 @@ setInterval(tick,1000);tick();
     g.addColorStop(0,'#fff');g.addColorStop(1,'#ccc');
     ctx.fillStyle=g;ctx.beginPath();ctx.arc(0,0,r,0,Math.PI*2);ctx.fill();
     // pentagon patches
-    const pts=[[0,-9,5.5],[8,4,5],[−8,4,5],[5,−5,4.5],[−5,−5,4.5]];
+    const pts=[[0,-9,5.5],[8,4,5],[-8,4,5],[5,-5,4.5],[-5,-5,4.5]];
     ctx.fillStyle='#111';
     pts.forEach(([px,py,pr])=>{
       ctx.beginPath();
@@ -884,7 +908,7 @@ function spawnConfetti(){
   scene.add(new THREE.AmbientLight(0x08100a,1.2));
 
   /* FLOODLIGHTS — 4 corners with gold tint */
-  const floodPositions=[[32,28,28],[-32,28,28],[32,28,-28],[-32,28,-28]];
+  const floodPositions=[[32,28,28],[-32,28,28],[32,28,-28],[-32,28,-28]]; /* fixed */
   floodPositions.forEach(([x,y,z])=>{
     const sl=new THREE.SpotLight(0xfff5cc,2.2,160,Math.PI/5.5,.4,1.2);
     sl.position.set(x,y,z);sl.target.position.set(0,0,0);
@@ -1169,7 +1193,37 @@ function spawnConfetti(){
   })();
 })();
 
-/* ── GSAP REVEALS ─────────────────────────────── */
+/* ── VIDEO BACKGROUND ─────────────────────────── */
+// Replace these IDs with any YouTube highlight video IDs you want
+const VIDS=[
+  {src:'vid1.mp4', label:'stadium'},
+  {src:'vid2.mp4', label:'DRIBBLE'},
+  {src:'vid3.mp4', label:'goalplay'},
+];
+let curVid=0;
+const player=document.getElementById('vid-player');
+function switchVid(i){
+  curVid=i;
+  player.src=VIDS[i].src;
+  player.play();
+  document.querySelectorAll('.vsw').forEach((el,j)=>el.classList.toggle('active',j===i));
+}
+player.addEventListener('ended',()=>switchVid((curVid+1)%VIDS.length));
+switchVid(0);
+let curVid=-1;
+function switchVid(i){
+  curVid=i;
+  const v=VIDS[i];
+  const frame=document.getElementById('yt-frame');
+  // autoplay=1 mute=1 loop=1 controls=0 disablekb=1 modestbranding=1
+  frame.src=`https://www.youtube-nocookie.com/embed/${v.id}?autoplay=1&mute=1&loop=1&playlist=${v.id}&controls=0&disablekb=1&modestbranding=1&rel=0&playsinline=1&start=5`;
+  document.querySelectorAll('.vsw').forEach((el,j)=>el.classList.toggle('active',j===i));
+}
+// Start with Messi on load
+setTimeout(()=>switchVid(0), 800);
+// Auto-cycle every 45s
+setInterval(()=>switchVid((curVid+1)%VIDS.length), 45000);
+
 gsap.registerPlugin(ScrollTrigger);
 gsap.utils.toArray('.rv').forEach(el=>{
   gsap.fromTo(el,
